@@ -12,14 +12,6 @@ This repository is a reusable self-hosted template for a split deployment:
 - API backend: local C service exposed through your preferred proxy or tunnel
 - data storage: local SQLite + exported JSON mirror + local avatar files
 
-## Language support
-
-The public frontend is organized around three languages:
-
-- English
-- Simplified Chinese
-- Traditional Chinese
-
 Each page includes a language switcher so visitors can move between the three versions.
 
 ## Security cleanup in this repository
