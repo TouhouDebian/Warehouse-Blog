@@ -2,8 +2,6 @@
 
 English | [简体中文](./README-zh_CN.md) | [繁體中文](./README-zh_TW.md)
 
-一个支持用户资料、项目展示、留言板与友链的自托管仓库博客系统，前端可静态部署，后端使用本地 C 服务与 SQLite。
-
 A self-hosted repository blog system with profiles, project showcases, a message board, and friendly links, using a static frontend and a local C/SQLite backend.
 
 This repository is a reusable self-hosted template for a split deployment:
