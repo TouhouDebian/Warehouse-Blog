@@ -848,8 +848,18 @@ static json_t *github_fetch_user_repos(const char *username) {
     return arr;
 }
 static int sync_github_public_repos(sqlite3 *db, int64_t user_id, const char *username) {
+    if (!valid_github_username(username)) {
+        return 0;
+    }
     json_t *repos = github_fetch_user_repos(username); if(!repos) return 0;
     sqlite3_stmt *stmt = NULL; int inserted = 0; size_t idx; json_t *item;
+
+    if (db_prepare(db, &stmt, "DELETE FROM app_repos WHERE user_id=?")) {
+        db_bind_int64(stmt, 1, user_id);
+        db_step_ok(db, stmt);
+        sqlite3_finalize(stmt);
+    }
+
     json_array_foreach(repos, idx, item) {
         const char *repo = json_string_value(json_object_get(item, "name"));
         const char *full = json_string_value(json_object_get(item, "full_name"));
@@ -1813,7 +1823,7 @@ static enum MHD_Result handle_api_profile_save(struct MHD_Connection *connection
             }
         }
     }
-    if (inserted_repos == 0 && github_username[0]) {
+    if (github_username[0]) {
         sync_github_public_repos(db, su.id, github_username);
     }
     sqlite3_close(db);
